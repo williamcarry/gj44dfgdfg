@@ -1,0 +1,42 @@
+{
+  "zh-CN": {
+    "title": "确认支付",
+    "noImage": "暂无图片",
+    "productLabel": "商品：",
+    "totalPriceLabel": "合计：",
+    "quantityLabel": "数量：",
+    "totalReduction": "价格明细",
+    "wechatPay": "微信支付",
+    "wechatPayDesc": "扫一扫支付",
+    "alipay": "支付宝",
+    "alipayDesc": "扫一扫支付",
+    "creditCard": "信用卡",
+    "creditCardDesc": "Visa/Mastercard",
+    "paypal": "PayPal",
+    "paypalDesc": "安全便捷",
+    "balancePay": "余额支付",
+    "balancePayDesc": "使用账户余额",
+    "payoneer": "Payoneer",
+    "payoneerDesc": "国际转账"
+  },
+  "en": {
+    "title": "Confirm Payment",
+    "noImage": "No Image",
+    "productLabel": "Product: ",
+    "totalPriceLabel": "Total: ",
+    "quantityLabel": "Quantity: ",
+    "totalReduction": "Price Breakdown",
+    "wechatPay": "WeChat Pay",
+    "wechatPayDesc": "Scan to Pay",
+    "alipay": "Alipay",
+    "alipayDesc": "Scan to Pay",
+    "creditCard": "Credit Card",
+    "creditCardDesc": "Visa/Mastercard",
+    "paypal": "PayPal",
+    "paypalDesc": "Safe & Convenient",
+    "balancePay": "Balance Payment",
+    "balancePayDesc": "Use Account Balance",
+    "payoneer": "Payoneer",
+    "payoneerDesc": "International Transfer"
+  }
+}

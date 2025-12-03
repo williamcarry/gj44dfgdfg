@@ -1,0 +1,356 @@
+<!--
+CSS 引用说明：
+1. 全局样式：在 src/main.ts 中自动加载
+   - src/assets/main.css (导入 src/assets/base.css)
+     - @tailwind base, components, utilities (Tailwind CSS)
+     - 全局 CSS 变量 (--color-*, --section-gap, --category-width 等)
+   - Element Plus 样式 (element-plus/dist/index.css)
+2. 页面局部样式：该文件底部的 <style scoped> 块
+3. 导入的子组件样式：由各子组件的 <style scoped> 块提供
+-->
+<template>
+  <div class="min-h-screen" style="background-color: #f2f3f7">
+    <SiteHeader />
+
+    <div class="w-full" style="background: linear-gradient(90deg, #000000 0%, #3C0A09 100%);">
+
+    <!-- Banner Carousel -->
+    <div class="w-full">
+      <div class="mx-auto w-full max-w-[1500px] md:w-[80%] md:min-w-[1200px] px-4 md:px-0 py-0">
+        <div class="relative">
+          <div class="bg-white rounded-lg overflow-hidden" style="background-color: rgb(242, 243, 247);">
+            <div
+              class="flex w-full relative transition-transform duration-500 ease-out"
+              :style="{
+                height: '300px',
+                overflow: 'hidden',
+                transform: `translateX(-${currentBannerSlide * 100}%)`
+              }"
+            >
+              <div
+                v-for="(banner, index) in bannerImages"
+                :key="index"
+                class="w-full flex-shrink-0 flex items-center justify-center bg-white"
+              >
+                <a
+                  target="_blank"
+                  href="https://www.saleyee.cn/Management/SaleSubject/EditSubjectModule/2649"
+                  class="block w-full h-full"
+                >
+                  <img
+                    loading="lazy"
+                    :src="banner"
+                    alt="平台直发 banner"
+                    class="w-full h-full object-cover cursor-pointer transition-opacity duration-300"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagination dots -->
+          <div class="absolute bottom-2 left-0 w-full flex justify-center z-10">
+            <button
+              v-for="(_, index) in bannerImages"
+              :key="index"
+              tabindex="0"
+              role="button"
+              :aria-label="`Go to slide ${index + 1}`"
+              @click="currentBannerSlide = index"
+              :class="[
+                'w-2 h-2 rounded-full mx-1 focus:outline-none transition-colors',
+                currentBannerSlide === index ? 'bg-yellow-400' : 'bg-gray-400 hover:bg-gray-500'
+              ]"
+            ></button>
+          </div>
+
+          <!-- Accessible live region -->
+          <span aria-live="assertive" aria-atomic="true" class="sr-only">
+            Slide {{ currentBannerSlide + 1 }} of {{ bannerImages.length }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 热卖推荐 (Hot Recommend) -->
+    <section class="mx-auto w-full max-w-[1500px] md:w-[80%] md:min-w-[1200px] px-4 md:px-0 py-6">
+      <div class="bg-transparent mx-auto w-full max-w-[1500px]">
+        <!-- Title -->
+        <h3
+          class="mx-auto text-center text-[36px] leading-[114px] mb-6"
+          :style="{ backgroundImage: `url(/frondend/images/DirectDeliveryPage/6610b7ae24959b0bfcbd47615dadf60c.png)`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width: '586px', height: '114px', paddingLeft: '90px', paddingRight: '90px', color: '#f2c475' }"
+        >
+          热卖推荐
+        </h3>
+
+        <!-- First row: two featured items -->
+        <div class="flex flex-wrap -mx-2 mb-4">
+          <div v-for="(p, idx) in hotRecommend.slice(0,2)" :key="p.spu" class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
+            <div class="bg-white p-5 flex gap-4 items-start">
+              <a :href="`/item/${p.spu}.html`" target="_blank" class="relative block flex-shrink-0 w-1/3">
+                <img src="/frondend/images/DirectDeliveryPage/right_top_hot.png" alt="badge" class="absolute right-0 top-0 w-14 h-14 object-contain" />
+                <img :src="p.mainImage" :alt="p.title" class="w-full h-28 object-cover rounded" />
+              </a>
+              <div class="flex-1">
+                <a :href="`/item/${p.spu}.html`" target="_blank" class="text-sm font-medium text-slate-800 hover:text-primary block truncate">{{ p.title }}</a>
+                <div class="mt-2 flex items-center gap-3">
+                  <b class="text-base font-bold text-red-600">{{ formatPrice(p._price) }}</b>
+                  <em v-if="p._originalPrice" class="text-sm text-slate-400 line-through">{{ formatPrice(p._originalPrice) }}</em>
+                  <span class="ml-2 bg-orange-400 text-white text-xs px-2 py-0.5 rounded">热卖</span>
+                </div>
+                <div class="mt-3 text-right">
+                  <input type="checkbox" :value="p.spu" class="hidden" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Second row: three items -->
+        <div class="flex flex-wrap -mx-2">
+          <div v-for="(p, idx) in hotRecommend.slice(2,5)" :key="p.spu" class="w-full md:w-1/3 px-2 mb-4">
+            <div class="bg-white p-4">
+              <a :href="`/item/${p.spu}.html`" target="_blank" class="block">
+                <div class="aspect-square bg-gray-100 overflow-hidden rounded mb-3">
+                  <img :src="p.mainImage" :alt="p.title" class="w-full h-full object-cover" />
+                </div>
+              </a>
+              <a :href="`/item/${p.spu}.html`" target="_blank" class="text-sm font-medium text-slate-800 hover:text-primary truncate">{{ p.title }}</a>
+              <div class="mt-2 flex items-center gap-2">
+                <b class="text-sm text-red-600 font-bold">{{ formatPrice(p._price) }}</b>
+                <span v-if="p._originalPrice" class="text-xs text-slate-400 line-through">{{ formatPrice(p._originalPrice) }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 平台直发优选 -->
+    <section class="mx-auto w-full max-w-[1500px] md:w-[80%] md:min-w-[1200px] px-4 md:px-0 py-6">
+      <!-- Title -->
+      <h3 class="mx-auto text-center text-[36px] leading-[114px] mb-6" :style="{ backgroundImage: `url(/frondend/images/DirectDeliveryPage/6610b7ae24959b0bfcbd47615dadf60c.png)`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width: '586px', height: '114px', paddingLeft: '90px', paddingRight: '90px', color: '#f2c475' }">平台直发优选</h3>
+
+      <!-- Category tiles -->
+      <div class="bg-white rounded-lg p-4 mb-6 relative">
+        <!-- Left arrow -->
+        <button @click="scrollCategories(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-white p-1 rounded-full shadow hidden sm:inline-flex" aria-label="上一页">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <div ref="catContainer" class="flex gap-3 overflow-x-auto no-scrollbar py-2 px-10 scroll-smooth">
+          <button
+            v-for="(cat, i) in categories"
+            :key="i"
+            type="button"
+            @click="selectedCategory = cat"
+            :aria-pressed="selectedCategory === cat"
+            :class="[
+              'flex-none px-4 py-3 border rounded shadow-sm text-sm transition',
+              selectedCategory === cat ? 'bg-red-50 text-red-600 border-red-600 font-semibold' : 'bg-white text-slate-700 hover:bg-slate-50'
+            ]"
+          >
+            {{ cat }}
+          </button>
+        </div>
+
+        <!-- Right arrow -->
+        <button @click="scrollCategories(1)" class="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-white p-1 rounded-full shadow hidden sm:inline-flex" aria-label="下一页">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Product tiles grid (5 columns) -->
+      <div class="flex flex-wrap -mx-2">
+        <div v-for="p in directSelection" :key="p.spu" class="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 px-2 mb-4">
+          <div class="bg-white p-4 relative">
+            <a :href="`/item/${p.spu}.html`" target="_blank" class="block mb-3">
+              <div class="aspect-[1/1] bg-gray-100 overflow-hidden rounded">
+                <img :src="p.mainImage" :alt="p.title" class="w-full h-full object-cover" />
+                <span class="absolute top-2 left-2 bg-orange-500 text-white text-xs px-2 py-0.5 rounded">热卖</span>
+              </div>
+            </a>
+            <a :href="`/item/${p.spu}.html`" target="_blank" class="text-sm font-medium text-slate-800 hover:text-primary two-line">{{ p.title }}</a>
+            <div class="mt-2 flex items-center gap-2">
+              <b class="text-sm text-red-600 font-bold">{{ formatPrice(p._price) }}</b>
+              <span v-if="p._originalPrice" class="text-xs text-slate-400 line-through">{{ formatPrice(p._originalPrice) }}</span>
+            </div>
+            <div class="mt-2">
+              <input type="checkbox" :value="p.spu" class="hidden" />
+            </div>
+
+            <div class="absolute bottom-2 right-2 flex items-center gap-2">
+              <a title="一键刊登" href="javascript:void(0)" class="action-publish" @click.prevent="onPublish(p)"></a>
+              <a title="下载" href="javascript:void(0)" class="action-download" aria-label="下载">
+                <img loading="lazy" src="/frondend/images/DirectDeliveryPage/down2.png" alt="下载" class="action-download-img" />
+              </a>
+              <a title="收藏" href="javascript:void(0)" class="action-fav" @click.prevent="onFav(p)">
+                <img loading="lazy" src="/frondend/images/DirectDeliveryPage/43ad215f8b4093e12361ae2cf252eab7.png" alt="收藏" class="action-fav-img" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Placeholder additional modules (kept hidden) -->
+      <div class="hidden">
+        <!-- Additional modules can be lazy-loaded here -->
+      </div>
+    </section>
+
+    </div>
+
+    <SiteFooter />
+    <RightFloatNav />
+  </div>
+</template>
+
+<script setup>
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import SiteHeader from '@/components/SiteHeader.vue'
+import SiteFooter from '@/components/SiteFooter.vue'
+import RightFloatNav from '@/components/RightFloatNav.vue'
+import { products as prodList } from '@/data/products'
+
+// Banner carousel state
+const bannerImages = [
+  '/frondend/images/DirectDeliveryPage/02d92e04-70a0-430c-a0ca-0f86e56abfea.jpg',
+]
+const currentBannerSlide = ref(0)
+let bannerAutoPlayInterval = null
+
+// Auto-play banner carousel
+const startBannerAutoPlay = () => {
+  bannerAutoPlayInterval = setInterval(() => {
+    currentBannerSlide.value = (currentBannerSlide.value + 1) % bannerImages.length
+  }, 5000)
+}
+
+const stopBannerAutoPlay = () => {
+  if (bannerAutoPlayInterval) {
+    clearInterval(bannerAutoPlayInterval)
+    bannerAutoPlayInterval = null
+  }
+}
+
+onMounted(() => {
+  if (bannerImages.length > 1) {
+    startBannerAutoPlay()
+  }
+})
+
+onUnmounted(() => {
+  stopBannerAutoPlay()
+})
+
+// categories used for the platform direct-delivery filter
+const categories = ['厨房用品','家居收纳用品&其它','庭院和园艺','电器类&消费电子类','汽摩配件','户外娱乐&运动','健康美容','宠物用品&婴童用品','家居装饰','演示菜单1','演示菜单2','演示菜单3','演示菜单4']
+const selectedCategory = ref(categories[0])
+const catContainer = ref(null)
+function scrollCategories(dir) {
+  const el = catContainer.value
+  if (!el) return
+  const distance = el.clientWidth * 0.6
+  el.scrollBy({ left: dir * distance, behavior: 'smooth' })
+}
+
+// demo product list — attach a category to each demo item so the UI can filter
+const demo = Array.from({ length: 80 }).map((_, i) => {
+  const base = prodList[i % prodList.length]
+  return {
+    ...base,
+    title: base.title,
+    mainImage: base.mainImage || 'https://resource.saleyee.com/UploadFiles/Images/placeholder.png',
+    _price: Number((18 + (i % 20) * 1.3).toFixed(2)),
+    _warehouses: i % 2 === 0 ? ['US'] : ['US','UK'],
+    spu: base.spu || `SPU-${i}`,
+    category: categories[i % categories.length]
+  }
+})
+const sortBy = ref('newest')
+const currentPage = ref(1)
+const itemsPerPage = 24
+
+const sorted = computed(() => {
+  if (sortBy.value === 'price_asc') return [...demo].sort((a,b)=>a._price-b._price)
+  if (sortBy.value === 'price_desc') return [...demo].sort((a,b)=>b._price-a._price)
+  return demo
+})
+
+const displayedProducts = computed(() => {
+  const start = (currentPage.value-1)*itemsPerPage
+  return sorted.value.slice(start, start + itemsPerPage)
+})
+
+// 热卖推荐数据（取前5条用于布局）
+const hotRecommend = computed(() => demo.slice(0, 5))
+
+// 平台直发优选数据（根据所选分类过滤）
+const directSelection = computed(() => demo.filter(p => (selectedCategory.value ? p.category === selectedCategory.value : true)))
+
+function formatPrice(n) { return `$${n.toFixed(2)}` }
+function prevPage(){ if (currentPage.value>1) currentPage.value-- }
+function nextPage(){ if ((currentPage.value*itemsPerPage) < demo.length) currentPage.value++ }
+
+// actions for product controls
+function onPublish(p) { console.log('publish', p.spu) }
+function onFav(p)    { console.log('fav', p.spu) }
+
+</script>
+
+<style scoped>
+:root{ --primary: #CB261C }
+.bg-primary{ background-color: var(--primary) }
+.text-primary{ color: var(--primary) }
+
+/* Banner carousel smooth transitions */
+.carousel-slide {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hide native scrollbar for horizontal category scroller */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Ensure buttons don't shrink and are aligned */
+.flex-none { flex: 0 0 auto; }
+
+/* Smooth scroll behavior fallback */
+.scroll-smooth { scroll-behavior: smooth; }
+
+/* Two-line truncation with ellipsis and fixed height */
+.two-line {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.25rem; /* match Tailwind text-sm leading */
+  height: calc(1.25rem * 2); /* fixed two-line height */
+  min-height: calc(1.25rem * 2);
+  max-height: calc(1.25rem * 2);
+}
+
+/* Product action icons (right-bottom) */
+.prod-actions { }
+.action-publish {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-image: url("/frondend/images/DirectDeliveryPage/3f8d8e905d1cb80e9c744fe7b9ad292a.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-right: 6px;
+  cursor: pointer;
+}
+.action-download-img { width: 16px; display: inline-block; }
+.action-download { display: inline-flex; align-items: center; justify-content: center; }
+.action-fav { display: inline-flex; align-items: center; justify-content: center; }
+.action-fav-img { width: 16px; display: inline-block; }
+</style>

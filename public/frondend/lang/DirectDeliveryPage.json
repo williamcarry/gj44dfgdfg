@@ -1,0 +1,18 @@
+{
+  "zh-CN": {
+    "hotRecommendTitle": "热卖推荐",
+    "platformDirectTitle": "平台直发优选",
+    "hotLabel": "热卖",
+    "publishAction": "一键刊登",
+    "downloadAction": "下载",
+    "favoriteAction": "收藏"
+  },
+  "en": {
+    "hotRecommendTitle": "Hot Recommend",
+    "platformDirectTitle": "Platform Direct Delivery",
+    "hotLabel": "Hot",
+    "publishAction": "Publish",
+    "downloadAction": "Download",
+    "favoriteAction": "Favorite"
+  }
+}

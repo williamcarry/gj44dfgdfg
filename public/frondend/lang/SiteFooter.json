@@ -1,0 +1,32 @@
+{
+    "zh-CN": {
+        "aboutSaleyee": "关于赛盈",
+        "saleyeeIntro": "赛盈简介",
+        "membership": "会员权益",
+        "contactUs": "联系我们",
+        "customerService": "客户服务",
+        "helpCenter": "帮助中心",
+        "vatPolicy": "VAT政策解读",
+        "feedback": "体验反馈",
+        "businessCooperation": "合作联系",
+        "crossBorderSeller": "跨境卖家入驻",
+        "supplier": "供应商入驻",
+        "officialWeChat": "赛盈官方微信",
+        "scanToFollow": "扫码关注获取平台资讯"
+    },
+    "en": {
+        "aboutSaleyee": "About Saleyee",
+        "saleyeeIntro": "Saleyee Introduction",
+        "membership": "Membership Benefits",
+        "contactUs": "Contact Us",
+        "customerService": "Customer Service",
+        "helpCenter": "Help Center",
+        "vatPolicy": "VAT Policy",
+        "feedback": "Feedback",
+        "businessCooperation": "Business Cooperation",
+        "crossBorderSeller": "Cross-border Seller Registration",
+        "supplier": "Supplier Registration",
+        "officialWeChat": "Saleyee Official WeChat",
+        "scanToFollow": "Scan to follow for platform updates"
+    }
+}

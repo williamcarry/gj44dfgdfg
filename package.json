@@ -1,0 +1,40 @@
+{
+  "name": "fusion-vue-tailwind-starter",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test:unit": "vitest",
+    "lint": "eslint . --fix",
+    "format": "prettier --write src/",
+    "download:direct-delivery-images": "node scripts/download-direct-delivery-images.cjs"
+  },
+  "dependencies": {
+    "element-plus": "^2.11.4",
+    "lucide-vue-next": "^0.545.0",
+    "vue": "^3.5.17",
+    "vue-router": "^4.6.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.0",
+    "@vitest/eslint-plugin": "^1.2.7",
+    "@vue/eslint-config-prettier": "^10.2.0",
+    "@vue/test-utils": "^2.4.6",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.29.0",
+    "eslint-plugin-vue": "~10.2.0",
+    "jiti": "^2.4.2",
+    "jsdom": "^26.1.0",
+    "postcss": "^8.5.6",
+    "postcss-preset-env": "^9.5.0",
+    "prettier": "3.5.3",
+    "tailwindcss": "^3.4.11",
+    "typescript": "^5.9.3",
+    "vite": "^7.0.0",
+    "vite-plugin-vue-devtools": "^7.7.7",
+    "vitest": "^3.2.4"
+  }
+}
